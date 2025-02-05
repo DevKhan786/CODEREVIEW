@@ -21,7 +21,6 @@ const SignUpPage = () => {
       return;
     }
     setError("");
-    // Handle the sign-up logic here (e.g., API call)
     console.log("Form submitted", formData);
   };
 
@@ -33,7 +32,6 @@ const SignUpPage = () => {
         </h2>
         {error && <div className="mb-4 text-red-600 text-center">{error}</div>}
         <form onSubmit={handleSubmit}>
-          {/* Name Field */}
           <div className="mb-4">
             <input
               type="text"
@@ -47,7 +45,6 @@ const SignUpPage = () => {
             />
           </div>
 
-          {/* Email Field */}
           <div className="mb-4">
             <input
               type="email"
@@ -61,7 +58,6 @@ const SignUpPage = () => {
             />
           </div>
 
-          {/* Password Field */}
           <div className="mb-4">
             <input
               type="password"
@@ -75,7 +71,6 @@ const SignUpPage = () => {
             />
           </div>
 
-          {/* Confirm Password Field */}
           <div className="mb-6">
             <input
               type="password"
@@ -98,7 +93,6 @@ const SignUpPage = () => {
             </button>
           </div>
 
-          {/* Login Redirect */}
           <div className="text-center text-sm text-gray-600">
             <p>
               Already have an account?{" "}
