@@ -1,7 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema(
+// Define User Document Interface
+interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+const userSchema = new mongoose.Schema<IUser>(
   {
     name: {
       type: String,
@@ -22,6 +30,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Hash password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
@@ -29,11 +38,13 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Compare password method
 userSchema.methods.comparePassword = async function (
   candidatePassword: string
 ) {
-  const isMatch = await bcrypt.compare(candidatePassword, this.password);
-  return isMatch;
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+// Export User model with IUser interface
+const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
+export default User;
