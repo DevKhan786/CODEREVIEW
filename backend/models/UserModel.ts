@@ -9,6 +9,7 @@ interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
+// Define the User Schema
 const userSchema = new mongoose.Schema<IUser>(
   {
     name: {
@@ -41,7 +42,7 @@ userSchema.pre("save", async function (next) {
 // Compare password method
 userSchema.methods.comparePassword = async function (
   candidatePassword: string
-) {
+): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
