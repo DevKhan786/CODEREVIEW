@@ -15,7 +15,7 @@ const signupHandler = async (req: Request, res: Response) => {
     if (password.length < 6) {
       res
         .status(400)
-        .json({ message: "Password must be at least 6 characters long" });
+        .json({ message: "Password must be at least 6 characters" });
       return;
     }
 
@@ -55,18 +55,21 @@ const loginHandler = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
+      console.log("Please enter all fields");
       res.status(400).json({ message: "Please enter all fields" });
       return;
     }
 
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
+      console.log("Invalid credentials");
       res.status(400).json({ message: "Invalid credentials" });
       return;
     }
 
     const isMatch = await existingUser.comparePassword(password);
     if (!isMatch) {
+      console.log("Invalid credentials");
       res.status(400).json({ message: "Invalid credentials" });
       return;
     }

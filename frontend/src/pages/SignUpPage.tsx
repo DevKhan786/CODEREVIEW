@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -8,20 +11,28 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const { signup } = useAuthStore((state) => state);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
     setError("");
-    console.log("Form submitted", formData);
+    try {
+      await signup(formData);
+      toast.success("Sign-up successful!");
+      navigate("/"); // Navigation handled here
+    } catch (error) {
+      console.error("Sign-up failed:", error);
+    }
   };
 
   return (
@@ -40,7 +51,7 @@ const SignUpPage = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="Enter name..."
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
               required
             />
           </div>
@@ -53,7 +64,7 @@ const SignUpPage = () => {
               placeholder="Enter email..."
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
               required
             />
           </div>
@@ -66,7 +77,7 @@ const SignUpPage = () => {
               placeholder="Enter password..."
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
               required
             />
           </div>
@@ -79,7 +90,7 @@ const SignUpPage = () => {
               placeholder="Confirm password..."
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
               required
             />
           </div>
@@ -87,7 +98,7 @@ const SignUpPage = () => {
           <div className="mb-4">
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
             >
               Sign Up
             </button>

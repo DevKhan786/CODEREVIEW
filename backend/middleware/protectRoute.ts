@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 interface RequestWithUser extends Request {
   user: any;
@@ -18,13 +18,17 @@ const protectRoute = (
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET as string
+    ) as JwtPayload;
 
-    req.user = decoded;
+    req.user = { id: decoded.id };
 
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Token is not valid" });
+    res.status(401).json({ message: "Token is not valid" });
+    return;
   }
 };
 
