@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "../stores/authStore";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {

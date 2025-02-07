@@ -173,4 +173,5 @@ router.post("/login", loginHandler);
 router.post("/logout", protectRoute, logoutHandler);
 router.get("/profile", protectRoute, getProfile);
 router.post("/upload-profile-pic", protectRoute, updateProfilePic);
+
 export default router;

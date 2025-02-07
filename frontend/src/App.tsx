@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import Sidebar from "./components/Sidebar";
 import { Toaster } from "react-hot-toast";
-import { useAuthStore } from "./store/authStore";
+import { useAuthStore } from "./stores/authStore";
 import { useEffect } from "react";
 import { axiosInstance } from "./lib/axiosInstance";
 

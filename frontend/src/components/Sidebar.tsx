@@ -10,7 +10,7 @@ import {
   FaSignInAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/stores/authStore";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
