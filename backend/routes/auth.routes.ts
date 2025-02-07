@@ -95,6 +95,7 @@ const loginHandler = async (req: Request, res: Response) => {
         id: existingUser._id,
         name: existingUser.name,
         email: existingUser.email,
+        profilePic: existingUser.profilePic,
       },
     });
   } catch (error) {
@@ -132,6 +133,7 @@ const getProfile = async (req: Request, res: Response) => {
 export const updateProfilePic = async (req: Request, res: Response) => {
   try {
     const { image } = req.body;
+    const userId = req.user?.id;
     if (!image) {
       res.status(400).json({ message: "No file uploaded" });
       return;
@@ -145,8 +147,6 @@ export const updateProfilePic = async (req: Request, res: Response) => {
     });
 
     const imageUrl = uploadResponse.secure_url;
-
-    const userId = req.user?.id;
 
     const user = await User.findByIdAndUpdate(
       userId,

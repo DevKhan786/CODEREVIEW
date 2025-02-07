@@ -15,6 +15,7 @@ const protectRoute = (req: Request, res: Response, next: NextFunction) => {
       process.env.JWT_SECRET as string
     ) as JwtPayload;
 
+
     req.user = { id: decoded.id };
     if (!req.user.id) {
       res.status(401).json({ message: "Invalid user in token" });

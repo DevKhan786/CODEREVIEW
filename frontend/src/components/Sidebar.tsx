@@ -14,8 +14,7 @@ import { useAuthStore } from "@/store/authStore";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuthStore((state) => state);
-  const { logout } = useAuthStore((state) => state);
+  const { user, logout } = useAuthStore();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
