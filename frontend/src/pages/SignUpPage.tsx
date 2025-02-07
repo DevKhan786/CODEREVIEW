@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/authStore";
-import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
@@ -28,7 +27,6 @@ const SignUpPage = () => {
     setError("");
     try {
       await signup(formData);
-      toast.success("Sign-up successful!");
       navigate("/"); // Navigation handled here
     } catch (error) {
       console.error("Sign-up failed:", error);
@@ -36,12 +34,14 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen mx-auto bg-gray-100">
-      <div className="w-full max-w-md px-12 py-16 bg-white border border-gray-300 rounded-xl shadow-lg">
-        <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">
+    <div className="flex items-center justify-center min-h-screen p-4 mx-auto bg-gray-100">
+      <div className="w-full max-w-md px-8 sm:px-12 py-8 sm:py-16 bg-white border border-gray-300 rounded-xl shadow-lg">
+        <h2 className="lg:text-3xl font-semibold text-center text-gray-700 mb-4 sm:text-2xl text-xs">
           Sign Up
         </h2>
-        {error && <div className="mb-4 text-red-600 text-center">{error}</div>}
+        {error && (
+          <div className="mb-4 text-red-600 text-center text-xs">{error}</div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
@@ -51,7 +51,7 @@ const SignUpPage = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="Enter name..."
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-xs"
               required
             />
           </div>
@@ -64,7 +64,7 @@ const SignUpPage = () => {
               placeholder="Enter email..."
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-xs"
               required
             />
           </div>
@@ -77,7 +77,7 @@ const SignUpPage = () => {
               placeholder="Enter password..."
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-xs"
               required
             />
           </div>
@@ -90,7 +90,7 @@ const SignUpPage = () => {
               placeholder="Confirm password..."
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-xs"
               required
             />
           </div>
@@ -98,14 +98,14 @@ const SignUpPage = () => {
           <div className="mb-4">
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 text-xs"
             >
               Sign Up
             </button>
           </div>
 
           <div className="text-center text-sm text-gray-600">
-            <p>
+            <p className="text-xs sm:text-sm">
               Already have an account?{" "}
               <a href="/login" className="text-blue-600 hover:text-blue-800">
                 Log in

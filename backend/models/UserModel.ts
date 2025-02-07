@@ -2,9 +2,11 @@ import mongoose, { Document, Model } from "mongoose";
 import bcrypt from "bcryptjs";
 
 interface IUser extends Document {
+  _id: string;
   name: string;
   email: string;
   password: string;
+  profilePic?: string;
   comparePassword(Password: string): Promise<boolean>;
 }
 
@@ -24,6 +26,10 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
       minlength: 6,
+    },
+    profilePic: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }

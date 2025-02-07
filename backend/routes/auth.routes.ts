@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import User from "../models/UserModel";
 import jwt from "jsonwebtoken";
+import protectRoute from "../middleware/protectRoute";
+import cloudinary from "../utils/cloudinaryConfig";
 
 const router = express.Router();
 
@@ -111,8 +113,64 @@ const logoutHandler = async (req: Request, res: Response) => {
   }
 };
 
+const getProfile = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+export const updateProfilePic = async (req: Request, res: Response) => {
+  try {
+    const { image } = req.body;
+    if (!image) {
+      res.status(400).json({ message: "No file uploaded" });
+      return;
+    }
+
+    const uploadResponse = await cloudinary.uploader.upload(image, {
+      folder: "profile_pics", // You can specify the folder name
+      transformation: [
+        { width: 150, height: 150, crop: "thumb", gravity: "face" },
+      ],
+    });
+
+    const imageUrl = uploadResponse.secure_url;
+
+    const userId = req.user?.id;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { profilePic: imageUrl },
+      { new: true }
+    );
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.status(200).json({ message: "Profile picture updated", user });
+    return;
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+    return;
+  }
+};
+
 router.post("/signup", signupHandler);
 router.post("/login", loginHandler);
-router.post("/logout", logoutHandler);
-
+router.post("/logout", protectRoute, logoutHandler);
+router.get("/profile", protectRoute, getProfile);
+router.post("/upload-profile-pic", protectRoute, updateProfilePic);
 export default router;

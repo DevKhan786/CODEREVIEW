@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/authStore";
-import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -21,17 +20,16 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await login(formData);
-      toast.success("Login successful!");
-      navigate("/"); // This should be done here in the component
+      navigate("/");
     } catch (error) {
       console.error("Login Error", error);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen mx-auto bg-gray-100">
-      <div className="w-full max-w-md px-12 py-16 bg-white border border-gray-300 rounded-xl shadow-lg">
-        <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">
+    <div className="flex items-center justify-center min-h-screen mx-auto p-4 bg-gray-100">
+      <div className="w-full max-w-md px-8 sm:px-12 py-8 sm:py-16 bg-white border border-gray-300 rounded-xl shadow-lg">
+        <h2 className="lg:text-3xl font-semibold text-center text-gray-700 mb-4 sm:text-2xl text-xs">
           Log In
         </h2>
 
@@ -44,7 +42,7 @@ const LoginPage = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter email..."
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-xs"
               required
             />
           </div>
@@ -57,7 +55,7 @@ const LoginPage = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter password..."
-              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm"
+              className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-xs"
               required
             />
           </div>
@@ -65,14 +63,14 @@ const LoginPage = () => {
           <div className="mb-4">
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
+              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 text-xs"
             >
               Log In
             </button>
           </div>
 
           <div className="text-center text-sm text-gray-600">
-            <p>
+            <p className="text-xs sm:text-sm">
               Don't have an account?{" "}
               <a href="/signup" className="text-blue-600 hover:text-blue-800">
                 Sign up
