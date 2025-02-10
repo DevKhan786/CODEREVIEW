@@ -24,7 +24,7 @@ const Sidebar = () => {
     <div className="flex h-screen">
       <div
         className={`${
-          isOpen ? "w-16 md:w-22" : "w-12"
+          isOpen ? "w-16 md:w-32" : "w-12"
         } bg-gray-100 text-black border-r border-black p-4 transition-all duration-300`}
       >
         <div className="flex items-center justify-center">
@@ -33,7 +33,15 @@ const Sidebar = () => {
             onClick={toggleSidebar}
             className="w-full mb-8 border border-gray-500 hover:border-black transition-all duration-150 hover:bg-gray-300"
           >
-            {isOpen ? <FaTimes /> : <FaBars />}
+            {isOpen ? (
+              <>
+                <FaTimes /> <span className="hidden md:block">Exit</span>{" "}
+              </>
+            ) : (
+              <>
+                <FaBars />
+              </>
+            )}
           </Button>
         </div>
 
@@ -45,6 +53,7 @@ const Sidebar = () => {
               className="w-full mb-4 border border-gray-500 hover:border-black transition-all duration-150 hover:bg-gray-300"
             >
               <FaHome className="text-xl" />
+              <span className="hidden md:block">Home</span>
             </Button>
           </Link>
 
@@ -57,6 +66,7 @@ const Sidebar = () => {
                   className="w-full mb-4 border border-gray-500 hover:border-black transition-all duration-150 hover:bg-gray-300"
                 >
                   <FaUserPlus className="text-xl" />
+                  <span className="hidden md:block">Register</span>
                 </Button>
               </Link>
               <Link to="/login" className="flex items-center">
@@ -65,6 +75,7 @@ const Sidebar = () => {
                   className="w-full mb-4 border border-gray-500 hover:border-black transition-all duration-150 hover:bg-gray-300"
                 >
                   <FaSignInAlt className="text-xl" />
+                  <span className="hidden md:block">Login</span>
                 </Button>
               </Link>
             </>
@@ -79,6 +90,7 @@ const Sidebar = () => {
                   className="w-full mb-4 border border-gray-500 hover:border-black transition-all duration-150 hover:bg-gray-300"
                 >
                   <FaUser className="text-xl" />
+                  <span className="hidden md:block">Profile</span>
                 </Button>
               </Link>
               <Button
@@ -87,6 +99,7 @@ const Sidebar = () => {
                 className="w-full mb-4 border border-gray-500 hover:border-black transition-all duration-150 hover:bg-gray-300"
               >
                 <FaSignOutAlt className="text-xl" />
+                <span className="hidden md:block">Logout</span>
               </Button>
             </>
           )}

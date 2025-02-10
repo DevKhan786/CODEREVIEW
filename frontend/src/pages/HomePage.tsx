@@ -1,11 +1,5 @@
-import ProfileImageUpload from "../components/ProfileImageUpload";
-
 const HomePage = () => {
-  return (
-    <div className="flex items-center justify-center flex-col min-h-screen w-full">
-      <ProfileImageUpload />
-    </div>
-  );
+  return <div>Home</div>;
 };
 
 export default HomePage;

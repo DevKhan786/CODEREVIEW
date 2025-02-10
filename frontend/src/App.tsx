@@ -7,15 +7,16 @@ import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./stores/authStore";
 import { useEffect } from "react";
 import { axiosInstance } from "./lib/axiosInstance";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
-  const { setUser } = useAuthStore((state) => state);
+  const { setUser } = useAuthStore();
 
   useEffect(() => {
     const getProfile = async () => {
       try {
         const response = await axiosInstance.get("/auth/profile", {
-          withCredentials: true, // Ensure cookies are sent with the request
+          withCredentials: true,
         });
         if (response.status === 200) {
           setUser(response.data.user);
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <Toaster />
     </div>
